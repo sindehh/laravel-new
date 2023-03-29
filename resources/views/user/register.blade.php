@@ -1,6 +1,7 @@
 @include('partials.header')
 
-<h3>Create an Account</h3>
+
+<h3>Welcome, It's time to create an account!</h3>
 <form action="/store" method="POST">
     @csrf
     
@@ -16,6 +17,7 @@
       class="form-control" 
       aria-describedby="emailHelp"
       name="name">
+      
     </div>
 
     <div class="mb-3">
@@ -45,8 +47,7 @@
     </div>
    
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-dark mb-3">Submit</button>
   </form>
   <h6><a href={{"/login"}}>Already have an account? Sign in here.</a></h6>
-
-  
+  @include('partials.footer')
