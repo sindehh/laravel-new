@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
+use App\Models\User;
 class UserController extends Controller
 {
-    //
-    public function register(){
-        return view('user.register');
-    }
+
+    public function useer()
+    {
+        $data = DB::table("users")->get();
+        return view('user.useer',['users'=>$data]);
+    } 
+
     public function login(){
         return view ('user.login');
     }
@@ -26,11 +30,17 @@ class UserController extends Controller
         if(auth()->attempt($validated)){
             $req->session()->regenerate();
 
-            return redirect("/");
+            return redirect("/")-> with('success', 'Succesfully Logged In');
         }
 
 
     }
+
+    public function register(){
+        return view ('user.register');
+    }
+
+
     public function store(Request $req){
         //dd($req);
         $validated=$req->validate([
@@ -45,12 +55,20 @@ class UserController extends Controller
         return redirect("/");
 
     }
+
     public function logout(Request $req){
         auth()->logout();
         $req->session()->invalidate();
         $req->session()->regenerateToken();
 
-        return redirect('login');
+        return redirect('login')-> with('successLogout', 'Succesfully Logged-Out');
     }
-
-}
+    
+    public function delete($id){
+        $delete = DB::table('customers')
+        ->where('id', $id)
+        ->delete();
+        return redirect('/')-> with('success', 'A record has been deleted!');
+    }
+   
+} 
