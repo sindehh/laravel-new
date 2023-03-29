@@ -1,10 +1,7 @@
 @include('partials.header')
 <x-nav/>
-@if(Session::has('success'))
-  {{Session::get('success')}}
-  @endif
 <table class="table table-hover">
-  <thead>
+  <thead class="table-dark">
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Last Name</th>
@@ -17,8 +14,14 @@
       </th>
     </tr>
   </thead>
-
-  @foreach ($customers as $customer)
+  @if(Session::has('success'))
+  <div class="alert alert-warning" role="alert">
+  {{ Session::get('success') }}
+</div>
+    
+  @endif
+  @foreach($customers as $customer)
+     
   <tbody>
     <tr>
       <th scope="row">{{$customer->id}}</th>
@@ -26,12 +29,11 @@
       <td>{{$customer->firstName}}</td>
       <td>{{$customer->email}}</td>
       <td>{{$customer->address}}</td>
-      <td><a href="#"class="btn btn-primary">Edit</a></td>
-      <td><a href="delete/{{$customer->id}}" class="btn btn-danger">Delete</a></td>
+      <td><a href="edit/{{$customer->id}}" class="text-info-emphasis">Edit</a></td>
+      <td><a href="delete/{{$customer->id}}" class="text-danger">DELETE</a></td>
+    
     </tr>
   </tbody>
   @endforeach
 </table>
-
-
 @include('partials.footer')
